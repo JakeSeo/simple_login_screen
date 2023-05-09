@@ -15,7 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Simple Login Screen',
-      theme: ThemeData(),
+      theme: ThemeData(
+        fontFamily: 'Pretendard',
+      ),
       routerConfig: appRouter.router,
     );
   }
