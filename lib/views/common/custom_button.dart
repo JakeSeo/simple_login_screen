@@ -23,12 +23,12 @@ class CustomButton extends StatelessWidget {
         Expanded(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              backgroundColor: Utils.mainGreen,
-              foregroundColor: Colors.white,
-            ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                backgroundColor: Utils.mainGreen,
+                foregroundColor: Colors.white,
+                disabledBackgroundColor: Colors.grey.shade300),
             onPressed: enabled ? onPressed : null,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
