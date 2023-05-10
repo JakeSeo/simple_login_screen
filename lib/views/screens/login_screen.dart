@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:simple_login_screen/views/common/custom_button.dart';
 import 'package:simple_login_screen/views/common/password_text_form_field.dart';
 
+import '../../router/app_routes.dart';
 import '../common/custom_text_form_field.dart';
 import '../../utils.dart';
 
@@ -14,14 +15,41 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool _formIsValid = false;
+  _goToSignupScreen(BuildContext context) {
+    context.goNamed(AppRoutes.signup.name);
+  }
 
-  _goToSignupScreen(BuildContext context) {}
+  _goToForgotPasswordScreen(BuildContext context) {
+    context.goNamed(AppRoutes.forgotPassword.name);
+  }
 
-  _goToForgotPasswordScreen(BuildContext context) {}
+  _login() {
+    // TODO: 상태관리
+  }
 
-  _login() {}
+  void _onEditText(String value) {
+    if (_formKey.currentState == null) return;
+
+    setState(() {
+      _formIsValid = _formKey.currentState!.validate();
+    });
+  }
+
+  String? _validateEmail(String? value) {
+    RegExp regex = RegExp(
+        r"^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$");
+    if (value == null || value.isEmpty) {
+      return '이메일을 입력해주세요.';
+    }
+    if (!regex.hasMatch(value)) {
+      return '이메일을 확인해주세요.';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,15 +115,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 24),
                   Form(
+                    key: _formKey,
                     child: Column(
                       children: [
                         CustomTextFormField(
                           controller: emailController,
                           hintText: '이메일',
+                          validator: _validateEmail,
+                          onChanged: _onEditText,
                         ),
                         const SizedBox(height: 16),
                         PasswordTextFormField(
                           controller: passwordController,
+                          onChanged: _onEditText,
                         ),
                       ],
                     ),
@@ -114,6 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CustomButton(
+              enabled: _formIsValid,
               onPressed: _login,
               text: "로그인",
             ),

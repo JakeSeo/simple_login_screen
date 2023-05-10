@@ -8,6 +8,8 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.suffixIcon,
     this.onClickSuffixIcon,
+    this.validator,
+    this.onChanged,
   });
 
   final TextEditingController controller;
@@ -15,12 +17,16 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText;
   final Widget? suffixIcon;
   final VoidCallback? onClickSuffixIcon;
+  final String? Function(String?)? validator;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       controller: controller,
       obscureText: obscureText,
+      validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         fillColor: Colors.white,
