@@ -7,16 +7,29 @@ class AppRouter {
     initialLocation: AppRoutes.home.path,
     routes: [
       GoRoute(
-          path: AppRoutes.home.path,
-          name: AppRoutes.home.name,
-          builder: (context, state) => const HomeScreen(),
-          routes: [
-            GoRoute(
-              path: AppRoutes.login.path,
-              name: AppRoutes.login.name,
-              builder: (context, state) => const LoginScreen(),
-            )
-          ]),
+        path: AppRoutes.home.path,
+        name: AppRoutes.home.name,
+        builder: (context, state) => const HomeScreen(),
+        routes: [
+          GoRoute(
+            path: AppRoutes.login.path,
+            name: AppRoutes.login.name,
+            builder: (context, state) => const LoginScreen(),
+            routes: [
+              GoRoute(
+                path: AppRoutes.forgotPassword.path,
+                name: AppRoutes.forgotPassword.name,
+                builder: (context, state) => const ForgotPasswordScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.signup.path,
+                name: AppRoutes.signup.name,
+                builder: (context, state) => const SignupScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
     ],
   );
 }
