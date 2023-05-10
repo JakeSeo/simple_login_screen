@@ -10,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onClickSuffixIcon,
     this.validator,
     this.onChanged,
+    this.textInputAction = TextInputAction.next,
   });
 
   final TextEditingController controller;
@@ -19,10 +20,12 @@ class CustomTextFormField extends StatelessWidget {
   final VoidCallback? onClickSuffixIcon;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
+  final TextInputAction textInputAction;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textInputAction: textInputAction,
       onChanged: onChanged,
       controller: controller,
       obscureText: obscureText,

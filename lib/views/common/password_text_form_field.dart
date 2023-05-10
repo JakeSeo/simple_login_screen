@@ -48,6 +48,7 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
       onClickSuffixIcon: _onTogglePassword,
       validator: _validatePassword,
       onChanged: widget.onChanged,
+      textInputAction: TextInputAction.done,
     );
   }
 }
