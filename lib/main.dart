@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:simple_login_screen/constants.dart';
+
+import './utils.dart';
 
 import 'router/app_router.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Simple Login Screen',
       theme: ThemeData(
-        primaryColor: Constants.mainColor,
+        primarySwatch: Utils.mainColor,
         brightness: Brightness.light,
         fontFamily: 'Pretendard',
       ),

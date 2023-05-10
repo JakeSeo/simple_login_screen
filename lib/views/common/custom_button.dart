@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:simple_login_screen/constants.dart';
+
+import '../../utils.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -23,7 +24,7 @@ class CustomButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
-              backgroundColor: Constants.mainGreen,
+              backgroundColor: Utils.mainGreen,
               foregroundColor: Colors.white,
             ),
             onPressed: onPressed,

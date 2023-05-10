@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:simple_login_screen/constants.dart';
 import 'package:simple_login_screen/views/common/custom_button.dart';
+import 'package:simple_login_screen/views/common/password_text_form_field.dart';
 
 import '../common/custom_text_form_field.dart';
+import '../../utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -90,9 +91,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         CustomTextFormField(
                           controller: emailController,
+                          hintText: '이메일',
                         ),
                         const SizedBox(height: 16),
-                        TextFormField(),
+                        PasswordTextFormField(
+                          controller: passwordController,
+                        ),
                       ],
                     ),
                   ),
@@ -119,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: const Text(
                 "비밀번호 찾기",
                 style: TextStyle(
-                  color: Constants.mainGreen,
+                  color: Utils.mainGreen,
                 ),
               ),
             ),
