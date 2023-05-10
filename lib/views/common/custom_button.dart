@@ -4,12 +4,12 @@ import 'package:simple_login_screen/constants.dart';
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
-    required this.child,
+    required this.text,
     required this.onPressed,
     this.isLoading = false,
   });
 
-  final Widget child;
+  final String text;
   final VoidCallback onPressed;
   final bool isLoading;
 
@@ -20,20 +20,26 @@ class CustomButton extends StatelessWidget {
         Expanded(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
               backgroundColor: Constants.mainGreen,
               foregroundColor: Colors.white,
             ),
             onPressed: onPressed,
-            child: isLoading
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 3,
-                    ),
-                  )
-                : child,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: isLoading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 3,
+                      ),
+                    )
+                  : Text(text, style: const TextStyle(fontSize: 20)),
+            ),
           ),
         ),
       ],

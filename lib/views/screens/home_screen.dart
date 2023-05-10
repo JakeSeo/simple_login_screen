@@ -17,9 +17,21 @@ class HomeScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Center(
-          child: CustomButton(
-            onPressed: () => _goToLoginScreen(context),
-            child: const Text("로그인"),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "홈 화면",
+                style: TextStyle(
+                  fontSize: 24,
+                ),
+              ),
+              const SizedBox(height: 16),
+              CustomButton(
+                onPressed: () => _goToLoginScreen(context),
+                text: "로그인",
+              ),
+            ],
           ),
         ),
       ),
