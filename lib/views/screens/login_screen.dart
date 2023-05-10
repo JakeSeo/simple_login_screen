@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:simple_login_screen/blocs/auth/auth_bloc.dart';
 import 'package:simple_login_screen/views/common/custom_button.dart';
 import 'package:simple_login_screen/views/common/password_text_form_field.dart';
 
@@ -29,6 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _login() {
     // TODO: 상태관리
+    BlocProvider.of<AuthBloc>(context).add(Login(
+      email: emailController.text,
+      password: passwordController.text,
+    ));
   }
 
   void _onEditText(String value) {
@@ -53,115 +59,125 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leadingWidth: 36,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black,
-        elevation: 0,
-        centerTitle: false,
-        title: const Text(
-          "로그인",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is LoggedIn) {
+          context.pop();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leadingWidth: 36,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.black,
+          elevation: 0,
+          centerTitle: false,
+          title: const Text(
+            "로그인",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        leading: GestureDetector(
-          onTap: () {
-            context.pop();
-          },
-          child: const Icon(
-            Icons.arrow_left_rounded,
-            size: 50,
+          leading: GestureDetector(
+            onTap: () {
+              context.pop();
+            },
+            child: const Icon(
+              Icons.arrow_left_rounded,
+              size: 50,
+            ),
           ),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () => _goToSignupScreen(context),
-            child: const Center(
-              child: Text(
-                "회원가입",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey,
+          actions: [
+            GestureDetector(
+              onTap: () => _goToSignupScreen(context),
+              child: const Center(
+                child: Text(
+                  "회원가입",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(width: 16),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  const SizedBox(height: 42),
-                  Row(
-                    children: const [
-                      Text(
-                        "로그인 하세요.",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 42),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        CustomTextFormField(
-                          controller: emailController,
-                          hintText: '이메일',
-                          validator: _validateEmail,
-                          onChanged: _onEditText,
-                        ),
-                        const SizedBox(height: 16),
-                        PasswordTextFormField(
-                          controller: passwordController,
-                          onChanged: _onEditText,
+            const SizedBox(width: 16),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    const SizedBox(height: 42),
+                    Row(
+                      children: const [
+                        Text(
+                          "로그인 하세요.",
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                       ],
                     ),
+                    const SizedBox(height: 42),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          CustomTextFormField(
+                            controller: emailController,
+                            hintText: '이메일',
+                            validator: _validateEmail,
+                            onChanged: _onEditText,
+                          ),
+                          const SizedBox(height: 16),
+                          PasswordTextFormField(
+                            controller: passwordController,
+                            onChanged: _onEditText,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 150),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+                return CustomButton(
+                  onPressed: _login,
+                  text: "로그인",
+                  isLoading: state is Loading,
+                  enabled: _formIsValid && state is! Loading,
+                );
+              }),
+              const SizedBox(height: 16),
+              GestureDetector(
+                onTap: () => _goToForgotPasswordScreen(context),
+                child: const Text(
+                  "비밀번호 찾기",
+                  style: TextStyle(
+                    color: Utils.mainGreen,
                   ),
-                  const SizedBox(height: 150),
-                ],
+                ),
               ),
             ],
           ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            CustomButton(
-              enabled: _formIsValid,
-              onPressed: _login,
-              text: "로그인",
-            ),
-            const SizedBox(height: 16),
-            GestureDetector(
-              onTap: () => _goToForgotPasswordScreen(context),
-              child: const Text(
-                "비밀번호 찾기",
-                style: TextStyle(
-                  color: Utils.mainGreen,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

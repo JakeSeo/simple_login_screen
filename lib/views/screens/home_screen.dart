@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simple_login_screen/router/app_routes.dart';
 
+import '../../blocs/auth/auth_bloc.dart';
 import '../common/custom_button.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,6 +11,10 @@ class HomeScreen extends StatelessWidget {
 
   _goToLoginScreen(BuildContext context) {
     context.goNamed(AppRoutes.login.name);
+  }
+
+  _logout(BuildContext context) {
+    BlocProvider.of<AuthBloc>(context).add(Logout());
   }
 
   @override
@@ -27,9 +33,22 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              CustomButton(
-                onPressed: () => _goToLoginScreen(context),
-                text: "로그인",
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  var buttonText = "로그인";
+                  var onPressed = () => _goToLoginScreen(context);
+                  if (state is LoggedIn) {
+                    buttonText = "로그아웃";
+                    onPressed = () => _logout(context);
+                  }
+
+                  return CustomButton(
+                    onPressed: onPressed,
+                    text: buttonText,
+                    isLoading: state is Loading,
+                    enabled: state is! Loading,
+                  );
+                },
               ),
             ],
           ),

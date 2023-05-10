@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_login_screen/blocs/auth/auth_bloc.dart';
 
 import './utils.dart';
 
 import 'router/app_router.dart';
 
 void main() {
-  runApp(MyApp(appRouter: AppRouter()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.appRouter});
-
-  final AppRouter appRouter;
+  const MyApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Simple Login Screen',
-      theme: ThemeData(
-        primarySwatch: Utils.mainColor,
-        brightness: Brightness.light,
-        fontFamily: 'Pretendard',
+    return BlocProvider<AuthBloc>(
+      create: (_) => AuthBloc(),
+      child: MaterialApp.router(
+        title: 'Simple Login Screen',
+        theme: ThemeData(
+          primarySwatch: Utils.mainColor,
+          brightness: Brightness.light,
+          fontFamily: 'Pretendard',
+        ),
+        routerConfig: AppRouter().router,
       ),
-      routerConfig: appRouter.router,
     );
   }
 }
