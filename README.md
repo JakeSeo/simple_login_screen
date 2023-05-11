@@ -1,6 +1,6 @@
 # 간단한 로그인 화면 구현
 
-![simulator_screenshot_363BADEA-AA7B-455F-B456-967451632DCC](https://github.com/JakeSeo/simple_login_screen/assets/10471865/5be1e185-3de4-4027-baa4-dba8e8167a0a | width: 250)
+![simulator_screenshot_363BADEA-AA7B-455F-B456-967451632DCC](https://github.com/JakeSeo/simple_login_screen/assets/10471865/5be1e185-3de4-4027-baa4-dba8e8167a0a | width=250)
 
 ## Flutter 및 Dart 버전
 
