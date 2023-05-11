@@ -1,16 +1,17 @@
-# simple_login_screen
+# 간단한 로그인 화면 구현
 
-A new Flutter project.
+![simulator_screenshot_363BADEA-AA7B-455F-B456-967451632DCC](https://github.com/JakeSeo/simple_login_screen/assets/10471865/5be1e185-3de4-4027-baa4-dba8e8167a0a)
 
-## Getting Started
+## Flutter 및 Dart 버전
 
-This project is a starting point for a Flutter application.
+```
+Flutter (Channel stable, 3.7.12, on macOS 13.3.1 22E772610a darwin-arm64, locale en-KR)
+Dart SDK version: 2.19.6 (stable) (Tue Mar 28 13:41:04 2023 +0000) on "macos_arm64"
+```
 
-A few resources to get you started if this is your first Flutter project:
+## 앱 실행 방법
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+flutter pub get
+flutter run
+```
