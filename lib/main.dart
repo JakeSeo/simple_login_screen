@@ -7,13 +7,16 @@ import './utils.dart';
 import 'router/app_router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp(appRouter: AppRouter()));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({
     super.key,
+    required this.appRouter,
   });
+
+  final AppRouter appRouter;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
             fontFamily: 'Pretendard',
           ),
-          routerConfig: AppRouter().router,
+          routerConfig: appRouter.router,
         ),
       ),
     );
