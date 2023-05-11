@@ -136,6 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintText: '이메일',
                             validator: _validateEmail,
                             onChanged: _onEditText,
+                            keyboardType: TextInputType.emailAddress,
                           ),
                           const SizedBox(height: 16),
                           PasswordTextFormField(
