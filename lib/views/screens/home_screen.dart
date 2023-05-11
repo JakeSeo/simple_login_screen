@@ -20,37 +20,26 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text("홈 화면")),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "홈 화면",
-                style: TextStyle(
-                  fontSize: 24,
-                ),
-              ),
-              const SizedBox(height: 16),
-              BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) {
-                  var buttonText = "로그인";
-                  var onPressed = () => _goToLoginScreen(context);
-                  if (state is LoggedIn) {
-                    buttonText = "로그아웃";
-                    onPressed = () => _logout(context);
-                  }
+          child: BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              var buttonText = "로그인";
+              var onPressed = () => _goToLoginScreen(context);
+              if (state is LoggedIn) {
+                buttonText = "로그아웃";
+                onPressed = () => _logout(context);
+              }
 
-                  return CustomButton(
-                    onPressed: onPressed,
-                    text: buttonText,
-                    isLoading: state is Loading,
-                    enabled: state is! Loading,
-                  );
-                },
-              ),
-            ],
+              return CustomButton(
+                onPressed: onPressed,
+                text: buttonText,
+                isLoading: state is Loading,
+                enabled: state is! Loading,
+              );
+            },
           ),
         ),
       ),
