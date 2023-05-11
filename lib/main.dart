@@ -17,16 +17,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      create: (_) => AuthBloc(),
-      child: MaterialApp.router(
-        title: 'Simple Login Screen',
-        theme: ThemeData(
-          primarySwatch: Utils.mainColor,
-          brightness: Brightness.light,
-          fontFamily: 'Pretendard',
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: BlocProvider<AuthBloc>(
+        create: (_) => AuthBloc(),
+        child: MaterialApp.router(
+          title: 'Simple Login Screen',
+          theme: ThemeData(
+            primarySwatch: Utils.mainColor,
+            brightness: Brightness.light,
+            fontFamily: 'Pretendard',
+          ),
+          routerConfig: AppRouter().router,
         ),
-        routerConfig: AppRouter().router,
       ),
     );
   }
